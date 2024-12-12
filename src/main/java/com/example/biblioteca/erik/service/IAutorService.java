@@ -6,7 +6,6 @@ import java.util.List;
 
 public interface IAutorService {
 
-    //lectura
     public List<Autor> getAutores();
 
 }

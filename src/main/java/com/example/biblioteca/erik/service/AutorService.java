@@ -16,7 +16,6 @@ public class AutorService implements IAutorService{
 
     @Override
     public List<Autor> getAutores() {
-        List<Autor> listaLibros = autoRepo.findAll();
-        return listaLibros;
+        return autoRepo.findAll();
     }
 }
