@@ -1,13 +1,12 @@
 package com.example.biblioteca.erik.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 
 @Entity
-@Data
 @Table
+@Data
 public class Autor {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,5 +17,4 @@ public class Autor {
     private String nacionalidad;
 
     private String biografia;
-
 }
