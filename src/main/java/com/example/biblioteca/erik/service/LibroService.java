@@ -13,7 +13,6 @@ public class LibroService implements ILibroService{
     @Autowired
     private ILibroRepository libroRepo;
 
-
     @Override
     public List<Libro> getLibros() {
         return libroRepo.findAll();

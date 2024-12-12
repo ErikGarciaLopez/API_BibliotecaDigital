@@ -21,7 +21,7 @@ public class Usuario {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Prestamo> historialPrestamos = new ArrayList<>();
+    //@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    //private List<Prestamo> historialPrestamos = new ArrayList<>();
 
 }
