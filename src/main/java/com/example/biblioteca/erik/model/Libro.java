@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Entity
 @Table
-@Data // Incluye @Getter, @Setter, @ToString, @EqualsAndHashCode
+@Data
 public class Libro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -13,7 +13,6 @@ public class AutorService implements IAutorService{
     @Autowired
     private IAutorRepository autoRepo;
 
-
     @Override
     public List<Autor> getAutores() {
         return autoRepo.findAll();
