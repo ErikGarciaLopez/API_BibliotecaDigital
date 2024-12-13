@@ -17,4 +17,11 @@ public class UsuarioService implements IUsuarioService{
     public List<Usuario> getUsuarios() {
         return usuarioRepo.findAll();
     }
+
+    @Override
+    public Usuario saveUsuario(Usuario usuario) {
+        usuarioRepo.save(usuario);
+        return usuario;
+    }
+
 }

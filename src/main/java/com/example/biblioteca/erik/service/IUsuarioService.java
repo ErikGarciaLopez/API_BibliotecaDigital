@@ -7,5 +7,6 @@ import java.util.List;
 public interface IUsuarioService {
 
     public List<Usuario> getUsuarios();
+    public Usuario saveUsuario(Usuario usuario);
 
 }
