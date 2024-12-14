@@ -20,12 +20,12 @@ public class UsuarioController {
     @Autowired
     private IUsuarioService usuarioService;
 
-    @GetMapping("/usuarios/traer")
+    @GetMapping("/usuarios")
     public List<Usuario> getUsuarios() {
         return usuarioService.getUsuarios();
     }
 
-    @PostMapping ("/usuarios/crear")
+    @PostMapping ("/usuarios")
     public ResponseEntity<ApiResponse> saveUsuario(@RequestBody Usuario usuario) {
         try {
             Usuario usuarioGuardado = usuarioService.saveUsuario(usuario);
