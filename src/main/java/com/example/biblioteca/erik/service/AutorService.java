@@ -28,4 +28,12 @@ public class AutorService implements IAutorService{
     public Autor saveAutor(Autor autor) {
         return autoRepo.save(autor);
     }
+
+    //Update
+
+
+    @Override
+    public void deleteAutor(Long id) {
+        autoRepo.deleteById(id);
+    }
 }

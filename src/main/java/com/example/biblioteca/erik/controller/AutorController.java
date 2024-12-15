@@ -83,5 +83,43 @@ public class AutorController {
         }
     }
 
+    @DeleteMapping("/autores/{id}")
+    public ResponseEntity<ApiResponse> deleteAutor(@PathVariable Long id) {
+        try {
+            // Verificar si el autor existe
+            Optional<Autor> autorExistente = autorService.getAutorById(id);
+
+            if (autorExistente.isEmpty()) {
+                ApiResponse response = ApiResponse.builder()
+                        .status("ERROR")
+                        .message("No se puede eliminar: el autor con ID " + id + " no existe")
+                        .timestamp(LocalDateTime.now())
+                        .build();
+
+                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+            }
+
+            // Si existe, eliminamos
+            autorService.deleteAutor(id);
+
+            ApiResponse response = ApiResponse.builder()
+                    .status("SUCCESS")
+                    .message("Autor eliminado exitosamente")
+                    .timestamp(LocalDateTime.now())
+                    .build();
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+
+        } catch (Exception e) {
+            ApiResponse errorResponse = ApiResponse.builder()
+                    .status("ERROR")
+                    .message("Error al eliminar el autor: " + e.getMessage())
+                    .timestamp(LocalDateTime.now())
+                    .build();
+
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 }

@@ -11,4 +11,6 @@ public interface IAutorService {
     public Optional<Autor> getAutorById(Long id);
     public Autor saveAutor(Autor autor);
 
+    public void deleteAutor(Long id);
+
 }
