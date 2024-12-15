@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LibroService implements ILibroService{
@@ -16,5 +17,10 @@ public class LibroService implements ILibroService{
     @Override
     public List<Libro> getLibros() {
         return libroRepo.findAll();
+    }
+
+    @Override
+    public Optional<Libro> getLibroById(Long id) {
+        return libroRepo.findById(id);
     }
 }
