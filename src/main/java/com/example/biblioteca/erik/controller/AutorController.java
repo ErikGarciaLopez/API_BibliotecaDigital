@@ -4,6 +4,7 @@ import com.example.biblioteca.erik.model.Autor;
 import com.example.biblioteca.erik.model.Usuario;
 import com.example.biblioteca.erik.payload.response.ApiResponse;
 import com.example.biblioteca.erik.service.IAutorService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -80,6 +81,40 @@ public class AutorController {
                     .build();
 
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/autores/{id}")
+    public ResponseEntity<ApiResponse> updateAutor(@PathVariable Long id, @RequestBody Autor autor) {
+        try {
+            Autor autorActualizado = autorService.updateAutor(id, autor);
+
+            ApiResponse response = ApiResponse.builder()
+                    .status("SUCCESS")
+                    .message("Autor actualizado exitosamente")
+                    .data(autorActualizado)
+                    .timestamp(LocalDateTime.now())
+                    .build();
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+
+        } catch (EntityNotFoundException e) {
+            ApiResponse response = ApiResponse.builder()
+                    .status("ERROR")
+                    .message(e.getMessage())
+                    .timestamp(LocalDateTime.now())
+                    .build();
+
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+
+        } catch (Exception e) {
+            ApiResponse errorResponse = ApiResponse.builder()
+                    .status("ERROR")
+                    .message("Error al actualizar el autor: " + e.getMessage())
+                    .timestamp(LocalDateTime.now())
+                    .build();
+
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

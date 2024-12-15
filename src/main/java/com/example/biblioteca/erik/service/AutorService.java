@@ -2,6 +2,7 @@ package com.example.biblioteca.erik.service;
 
 import com.example.biblioteca.erik.model.Autor;
 import com.example.biblioteca.erik.repository.IAutorRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,8 +30,29 @@ public class AutorService implements IAutorService{
         return autoRepo.save(autor);
     }
 
-    //Update
+    @Override
+    public Autor updateAutor(Long id, Autor autorDetails) {
+        Optional<Autor> autor = autoRepo.findById(id);
 
+        if (autor.isEmpty()) {
+            throw new EntityNotFoundException("No se encontró el autor con ID: " + id);
+        }
+
+        Autor autorExistente = autor.get();
+
+        // Actualizamos solo los campos no nulos
+        if (autorDetails.getNombre() != null) {
+            autorExistente.setNombre(autorDetails.getNombre());
+        }
+        if (autorDetails.getNacionalidad() != null) {
+            autorExistente.setNacionalidad(autorDetails.getNacionalidad());
+        }
+        if (autorDetails.getBiografia() != null) {
+            autorExistente.setBiografia(autorDetails.getBiografia());
+        }
+
+        return autoRepo.save(autorExistente);
+    }
 
     @Override
     public void deleteAutor(Long id) {
