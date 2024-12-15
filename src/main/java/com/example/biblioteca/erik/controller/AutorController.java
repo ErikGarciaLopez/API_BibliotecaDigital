@@ -1,15 +1,13 @@
 package com.example.biblioteca.erik.controller;
 
 import com.example.biblioteca.erik.model.Autor;
+import com.example.biblioteca.erik.model.Usuario;
 import com.example.biblioteca.erik.payload.response.ApiResponse;
 import com.example.biblioteca.erik.service.IAutorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -60,5 +58,30 @@ public class AutorController {
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PostMapping("/autores")
+    public ResponseEntity<ApiResponse> saveAutor(@RequestBody Autor autor) {
+        try {
+            Autor autorGuardado = autorService.saveAutor(autor);
+
+            ApiResponse response = ApiResponse.builder()
+                    .status("SUCCESS")
+                    .message("Autor creado exitosamente")
+                    .data(autorGuardado)
+                    .timestamp(LocalDateTime.now())
+                    .build();
+
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        } catch (Exception e) {
+            ApiResponse errorResponse = ApiResponse.builder()
+                    .status("ERROR")
+                    .message("Error al crear el autor: " + e.getMessage())
+                    .timestamp(LocalDateTime.now())
+                    .build();
+
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
 }

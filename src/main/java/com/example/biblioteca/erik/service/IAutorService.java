@@ -9,5 +9,6 @@ public interface IAutorService {
 
     public List<Autor> getAutores();
     public Optional<Autor> getAutorById(Long id);
+    public Autor saveAutor(Autor autor);
 
 }

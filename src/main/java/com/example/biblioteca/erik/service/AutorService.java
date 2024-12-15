@@ -23,4 +23,9 @@ public class AutorService implements IAutorService{
     public Optional<Autor> getAutorById(Long id) {
         return autoRepo.findById(id);
     }
+
+    @Override
+    public Autor saveAutor(Autor autor) {
+        return autoRepo.save(autor);
+    }
 }
