@@ -9,5 +9,6 @@ public interface ILibroService {
 
     public List<Libro> getLibros();
     public Optional<Libro> getLibroById(Long id);
+    public Libro saveLibro(Libro libro);
 
 }

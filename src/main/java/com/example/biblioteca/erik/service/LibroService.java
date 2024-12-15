@@ -23,4 +23,9 @@ public class LibroService implements ILibroService{
     public Optional<Libro> getLibroById(Long id) {
         return libroRepo.findById(id);
     }
+
+    @Override
+    public Libro saveLibro(Libro libro) {
+        return libroRepo.save(libro);
+    }
 }

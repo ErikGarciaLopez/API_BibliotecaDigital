@@ -6,9 +6,7 @@ import com.example.biblioteca.erik.service.ILibroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -59,6 +57,30 @@ public class LibroController {
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    @PostMapping("/libro")
+    public ResponseEntity<ApiResponse> saveLibro(@RequestBody Libro libro) {
+        try {
+            Libro libroGuardado = libroService.saveLibro(libro);
+
+            ApiResponse response = ApiResponse.builder()
+                    .status("SUCCESS")
+                    .message("Libro creado exitosamente")
+                    .data(libroGuardado)
+                    .timestamp(LocalDateTime.now())
+                    .build();
+
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        } catch (Exception e) {
+            ApiResponse errorResponse = ApiResponse.builder()
+                    .status("ERROR")
+                    .message("Error al crear el libro: " + e.getMessage())
+                    .timestamp(LocalDateTime.now())
+                    .build();
+
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
     }
 
 
