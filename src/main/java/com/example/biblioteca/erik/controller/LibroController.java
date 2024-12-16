@@ -1,8 +1,10 @@
 package com.example.biblioteca.erik.controller;
 
+import com.example.biblioteca.erik.model.Autor;
 import com.example.biblioteca.erik.model.Libro;
 import com.example.biblioteca.erik.payload.response.ApiResponse;
 import com.example.biblioteca.erik.service.ILibroService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -80,6 +82,40 @@ public class LibroController {
                     .build();
 
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("libro/{id}")
+    public ResponseEntity<ApiResponse> updateLibro(@PathVariable Long id, @RequestBody Libro libro){
+        try {
+            Libro libroActualizado = libroService.updateLibro(id, libro);
+
+            ApiResponse response = ApiResponse.builder()
+                    .status("SUCCESS")
+                    .message("Libro actualizado exitosamente")
+                    .data(libroActualizado)
+                    .timestamp(LocalDateTime.now())
+                    .build();
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+
+        } catch (EntityNotFoundException e) {
+            ApiResponse response = ApiResponse.builder()
+                    .status("ERROR")
+                    .message(e.getMessage())
+                    .timestamp(LocalDateTime.now())
+                    .build();
+
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+
+        } catch (Exception e) {
+            ApiResponse errorResponse = ApiResponse.builder()
+                    .status("ERROR")
+                    .message("Error al actualizar el libro: " + e.getMessage())
+                    .timestamp(LocalDateTime.now())
+                    .build();
+
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
