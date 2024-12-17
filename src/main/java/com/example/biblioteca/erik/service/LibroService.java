@@ -58,4 +58,9 @@ public class LibroService implements ILibroService{
         return libroRepo.save(libroExistente);
 
     }
+
+    @Override
+    public void deleteLibro(Long id) {
+        libroRepo.deleteById(id);
+    }
 }

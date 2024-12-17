@@ -11,5 +11,6 @@ public interface ILibroService {
     public Optional<Libro> getLibroById(Long id);
     public Libro saveLibro(Libro libro);
     public Libro updateLibro(Long id, Libro libro);
+    public void deleteLibro(Long id);
 
 }
