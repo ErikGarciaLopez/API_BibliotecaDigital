@@ -17,4 +17,9 @@ public class PrestamoService implements IPrestamoService{
     public List<Prestamo> getPrestamos() {
         return prestamoRepo.findAll();
     }
+
+    @Override
+    public Prestamo savePrestamo(Prestamo prestamo) {
+        return prestamoRepo.save(prestamo);
+    }
 }

@@ -7,5 +7,6 @@ import java.util.List;
 public interface IPrestamoService {
 
     public List<Prestamo> getPrestamos();
+    public Prestamo savePrestamo(Prestamo prestamo);
 
 }
