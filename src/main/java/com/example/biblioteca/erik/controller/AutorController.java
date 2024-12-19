@@ -1,7 +1,6 @@
 package com.example.biblioteca.erik.controller;
 
 import com.example.biblioteca.erik.model.Autor;
-import com.example.biblioteca.erik.model.Usuario;
 import com.example.biblioteca.erik.payload.response.ApiResponse;
 import com.example.biblioteca.erik.service.IAutorService;
 import jakarta.persistence.EntityNotFoundException;
@@ -15,6 +14,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/api")
+@CrossOrigin(origins = "*")
 public class AutorController {
 
     @Autowired
@@ -156,5 +157,31 @@ public class AutorController {
         }
     }
 
+    // ... resto del código ...
+
+    @PostMapping("/autores/buscar-o-crear")
+    public ResponseEntity<ApiResponse> buscarOCrearAutor(@RequestBody Autor autor) {
+        try {
+            Autor autorEncontrado = autorService.buscarOCrearAutor(autor.getNombre());
+
+            ApiResponse response = ApiResponse.builder()
+                    .status("SUCCESS")
+                    .message(autorEncontrado.getId() != null ? "Autor encontrado exitosamente" : "Autor creado exitosamente")
+                    .data(autorEncontrado)
+                    .timestamp(LocalDateTime.now())
+                    .build();
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+
+        } catch (Exception e) {
+            ApiResponse errorResponse = ApiResponse.builder()
+                    .status("ERROR")
+                    .message("Error al buscar o crear el autor: " + e.getMessage())
+                    .timestamp(LocalDateTime.now())
+                    .build();
+
+            return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }

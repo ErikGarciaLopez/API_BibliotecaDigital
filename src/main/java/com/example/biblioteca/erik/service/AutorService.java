@@ -58,4 +58,14 @@ public class AutorService implements IAutorService{
     public void deleteAutor(Long id) {
         autoRepo.deleteById(id);
     }
+
+    @Override
+    public Autor buscarOCrearAutor(String nombre) {
+        return autoRepo.findByNombre(nombre)
+                .orElseGet(() -> {
+                    Autor nuevoAutor = new Autor();
+                    nuevoAutor.setNombre(nombre);
+                    return autoRepo.save(nuevoAutor);
+                });
+    }
 }

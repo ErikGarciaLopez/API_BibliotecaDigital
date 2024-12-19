@@ -12,5 +12,6 @@ public interface IAutorService {
     public Autor saveAutor(Autor autor);
     public Autor updateAutor(Long id, Autor autor);
     public void deleteAutor(Long id);
+    Autor buscarOCrearAutor(String nombre);
 
 }
